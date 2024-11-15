@@ -87,7 +87,7 @@ test IN A 192.28.5.4      ; Rexistro A. O dominio "test.pepe.int" apunta á IP 1
   
 alias IN CNAME test       ; Rexistro CNAME. O alias "alias.pepe.int" apunta a "test.pepe.int".
 ```
-
+Polo tanto seria o mesmo facer un `dig test.pepe.int` que un `dig alias.pepe.int` xa que a resposta seria a mesma
 ## 8. Cómo podo facer para que a configuración dun contenedor DNS non se borre se creo outro contenedor?
 Para que a informacion non se borre utilizamos volumes. A continuacion vou deixar un exemplo dun .yaml dun contenedor dns que fixen con bind9:
 ```
