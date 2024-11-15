@@ -1,0 +1,17 @@
+$TTL 38400  ; O tempo de vida (TTL) predeterminado para os rexistros DNS, en segundos.
+             ; Aquí, 38400 segundos (10 horas e 40 minutos).
+
+@    IN SOA ns.tendaelectronica.int. some.email.address. (  ; Rexistro SOA (Start of Authority) para a zona "tendaelectronica.int"
+               10000002   ; Serial do ficheiro de zona. 
+               10800      ; Tempo de actualización (refresh): 3 horas. 
+               3600       ; Tempo de reintento (retry): 1 hora. 
+               604800     ; Tempo de expiración (expire): 1 semana. 
+               38400      ; TTL mínimo: 10 horas e 40 minutos. 
+             )
+
+@    IN NS ns.tendaelectronica.int.   ;
+ns   IN A 172.16.0.2      ; 
+test IN A 172.16.0.3      ; 
+www  IN A 172.16.0.1      ; 
+owncloud IN CNAME www     ;  
+texto IN TXT 1234ASDF      ; 

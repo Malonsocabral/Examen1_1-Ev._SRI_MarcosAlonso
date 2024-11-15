@@ -108,9 +108,12 @@ services:
 
 
 ## 9. Engade unha zoa tendaelectronica.int no teu docker DNS que teña:
-- www á IP 172.16.0.1
-- owncloud sexa un CNAME de www
-- un rexistro de texto có contido "1234ASDF"
+- www á IP 172.16.0.1  
+Feito na liña 15 en zonas
+- owncloud sexa un CNAME de www  
+Feito na liña 16 en zonas
+- un rexistro de texto có contido "1234ASDF"  
+Feito na liña 17 en zonas
 Comproba que todo funciona có comando "dig"
 Mostra nos logs que o servicio funciona ben usando a saída da terminal ó levantar o compose ou có comando "docker logs [nomeContenedorOuID]"
 (o apartado 9 realízase na máquina virtual)
