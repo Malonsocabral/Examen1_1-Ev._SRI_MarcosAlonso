@@ -14,4 +14,4 @@ ns   IN A 172.16.0.2      ;
 test IN A 172.16.0.3      ; 
 www  IN A 172.16.0.1      ; 
 owncloud IN CNAME www     ;  
-texto IN TXT 1234ASDF      ; 
+texto IN TXT "1234ASDF"   ; 
