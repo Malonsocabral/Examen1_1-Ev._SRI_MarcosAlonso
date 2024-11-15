@@ -7,14 +7,15 @@ Contesta as seguintes preguntas, xustificándoas, nun README.md
 ## 1. Explica métodos para 'abrir' unha consola/shell a un contenedor en execución.
 
 Para meternos na consola dun contenedor xa en execucion debemos facel algo tal que asi: `docker exec -it <container id o nome> /bin/bash(ou o interprete que use, por exemplo sh)` 
-
-------------------Tamen podemos facer un `docker run -it <image_name> sh` que é basicamente o mesmo.  
 E por ultimo podemos facer un `docker attach <container id o nome>`
+
+>[!NOTE]
+>Tamen podemos facer un `docker run -it <image_name> sh` que é basicamente o mesmo pero este comando xa crea directamente o contenedor aunque no este arrincado. 
 
 ## 2. No contenedor anterior (en execución), qué opciones tes que ter usado ó arrincalo para poder interactuar coas súas entradas e salidas
 Para meterte na consola, podes facer un contenedor previo como demonio co -d (exemplo: docker run -d alpine sh) para que asi podas poñer na mesma terminar un dos anteriores comandos ou iniciar o contenedor sen o -d y noutra terminal poñer o comando.  
 As opcions que se usan son -i para mantener a consola aberta e o -t que crea a propia consola.  
-Un exemplo de que inicie un contenedor e metanos na terminal ao momento seria o seguinte: `docker run -it --name interactivo alpine sh` (crea un sistema alpine e metenos na sua consola directamente)
+Un exemplo de que inicie un contenedor e metanos na terminal ao momento seria o seguinte: `docker run -it --name contenedor_interactivo alpine sh` (crea un sistema alpine e metenos na sua consola directamente)
 
 
 
@@ -67,8 +68,10 @@ networks:
 ```
 
 ## 5. Qué comando de consola podo usar para sabe-las ips dos contenedores anteriores?
-O primeiro comando de doker que pode ser util e o seguinte xa que lista as IP da rede que acabamos de crear: `docker network inspect redcompartida`
--------dig ???
+O primeiro comando de doker que pode ser util e o seguinte xa que lista as IP da rede que acabamos de crear: `docker network inspect <nome da rede>`  
+E para saber este nome de rede podemos facer un `docker network ls`, e asi listanos as redes. Polo que no meu caso chamase `examen1_1-ev_sri_marcosalonso_redcompartida` xa que ao iniciar o .yaml, ponse ese nome.  
+Polo que para ver as ips destes contenedores facemos un `docker network inspect examen1_1-ev_sri_marcosalonso_redcompartida`
+
 
 
 ## 6. Cál é a funcionalidade do apartado "ports" en docker compose?
@@ -280,6 +283,121 @@ Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done
 ```
+  
+E a continuacion vou pegar o resultado do comando de `docker logs servidor_DNS`
+```
+postgres@debian:~$ docker logs servidor_DNS
+Starting named...
+exec /usr/sbin/named -u "bind" "-g" ""
+15-Nov-2024 18:09:03.589 starting BIND 9.18.28-0ubuntu0.24.04.1-Ubuntu (Extended Support Version) <id:>
+15-Nov-2024 18:09:03.589 running on Linux x86_64 5.10.0-33-amd64 #1 SMP Debian 5.10.226-1 (2024-10-03)
+15-Nov-2024 18:09:03.589 built with  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/x86_64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-CTg8aa/bind9-9.18.28=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/bind9-CTg8aa/bind9-9.18.28=/usr/src/bind9-1:9.18.28-0ubuntu0.24.04.1 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+15-Nov-2024 18:09:03.589 running as: named -u bind -g
+15-Nov-2024 18:09:03.589 compiled by GCC 13.2.0
+15-Nov-2024 18:09:03.589 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+15-Nov-2024 18:09:03.589 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+15-Nov-2024 18:09:03.589 compiled with libuv version: 1.48.0
+15-Nov-2024 18:09:03.589 linked to libuv version: 1.48.0
+15-Nov-2024 18:09:03.589 compiled with libxml2 version: 2.9.14
+15-Nov-2024 18:09:03.589 linked to libxml2 version: 20914
+15-Nov-2024 18:09:03.589 compiled with json-c version: 0.17
+15-Nov-2024 18:09:03.589 linked to json-c version: 0.17
+15-Nov-2024 18:09:03.589 compiled with zlib version: 1.3
+15-Nov-2024 18:09:03.589 linked to zlib version: 1.3
+15-Nov-2024 18:09:03.589 ----------------------------------------------------
+15-Nov-2024 18:09:03.589 BIND 9 is maintained by Internet Systems Consortium,
+15-Nov-2024 18:09:03.589 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+15-Nov-2024 18:09:03.589 corporation.  Support and training for BIND 9 are 
+15-Nov-2024 18:09:03.589 available at https://www.isc.org/support
+15-Nov-2024 18:09:03.589 ----------------------------------------------------
+15-Nov-2024 18:09:03.589 found 6 CPUs, using 6 worker threads
+15-Nov-2024 18:09:03.589 using 6 UDP listeners per interface
+15-Nov-2024 18:09:03.593 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+15-Nov-2024 18:09:03.593 DS algorithms: SHA-1 SHA-256 SHA-384
+15-Nov-2024 18:09:03.593 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+15-Nov-2024 18:09:03.593 TKEY mode 2 support (Diffie-Hellman): yes
+15-Nov-2024 18:09:03.593 TKEY mode 3 support (GSS-API): yes
+15-Nov-2024 18:09:03.593 loading configuration from '/etc/bind/named.conf'
+15-Nov-2024 18:09:03.593 unable to open '/etc/bind/bind.keys'; using built-in keys instead
+15-Nov-2024 18:09:03.593 looking for GeoIP2 databases in '/usr/share/GeoIP'
+15-Nov-2024 18:09:03.593 using default UDP/IPv4 port range: [32768, 60999]
+15-Nov-2024 18:09:03.593 using default UDP/IPv6 port range: [32768, 60999]
+15-Nov-2024 18:09:03.593 listening on IPv4 interface lo, 127.0.0.1#53
+15-Nov-2024 18:09:03.593 listening on IPv4 interface eth0, 172.16.0.4#53
+15-Nov-2024 18:09:03.597 IPv6 socket API is incomplete; explicitly binding to each IPv6 address separately
+15-Nov-2024 18:09:03.597 listening on IPv6 interface lo, ::1#53
+15-Nov-2024 18:09:03.597 generating session key for dynamic DNS
+15-Nov-2024 18:09:03.597 sizing zone task pool based on 1 zones
+15-Nov-2024 18:09:03.597 none:99: 'max-cache-size 90%' - setting to 6661MB (out of 7401MB)
+15-Nov-2024 18:09:03.597 set up managed keys zone for view _default, file 'managed-keys.bind'
+15-Nov-2024 18:09:03.597 configuring command channel from '/etc/bind/rndc.key'
+15-Nov-2024 18:09:03.597 command channel listening on 127.0.0.1#953
+15-Nov-2024 18:09:03.597 configuring command channel from '/etc/bind/rndc.key'
+15-Nov-2024 18:09:03.597 command channel listening on ::1#953
+15-Nov-2024 18:09:03.597 not using config file logging statement for logging due to -g option
+15-Nov-2024 18:09:03.597 managed-keys-zone: loaded serial 0
+15-Nov-2024 18:09:03.597 zone tendaelectronica.int/IN: loaded serial 10000002
+15-Nov-2024 18:09:03.597 all zones loaded
+15-Nov-2024 18:09:03.597 running
+15-Nov-2024 18:22:52.186 no longer listening on 127.0.0.1#53
+15-Nov-2024 18:22:52.186 no longer listening on 172.16.0.4#53
+15-Nov-2024 18:22:52.186 no longer listening on ::1#53
+15-Nov-2024 18:22:52.186 shutting down
+15-Nov-2024 18:22:52.186 stopping command channel on 127.0.0.1#953
+15-Nov-2024 18:22:52.186 stopping command channel on ::1#953
+15-Nov-2024 18:22:52.194 exiting
+Starting named...
+exec /usr/sbin/named -u "bind" "-g" ""
+15-Nov-2024 18:23:02.978 starting BIND 9.18.28-0ubuntu0.24.04.1-Ubuntu (Extended Support Version) <id:>
+15-Nov-2024 18:23:02.978 running on Linux x86_64 5.10.0-33-amd64 #1 SMP Debian 5.10.226-1 (2024-10-03)
+15-Nov-2024 18:23:02.978 built with  '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--disable-dependency-tracking' '--libdir=/usr/lib/x86_64-linux-gnu' '--sysconfdir=/etc/bind' '--with-python=python3' '--localstatedir=/' '--enable-threads' '--enable-largefile' '--with-libtool' '--enable-shared' '--disable-static' '--with-gost=no' '--with-openssl=/usr' '--with-gssapi=yes' '--with-libidn2' '--with-json-c' '--with-lmdb=/usr' '--with-gnu-ld' '--with-maxminddb' '--with-atf=no' '--enable-ipv6' '--enable-rrl' '--enable-filter-aaaa' '--disable-native-pkcs11' 'build_alias=x86_64-linux-gnu' 'CFLAGS=-g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/bind9-CTg8aa/bind9-9.18.28=. -flto=auto -ffat-lto-objects -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/bind9-CTg8aa/bind9-9.18.28=/usr/src/bind9-1:9.18.28-0ubuntu0.24.04.1 -fno-strict-aliasing -fno-delete-null-pointer-checks -DNO_VERSION_DATE -DDIG_SIGCHASE' 'LDFLAGS=-Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -Wl,-z,now' 'CPPFLAGS=-Wdate-time -D_FORTIFY_SOURCE=3'
+15-Nov-2024 18:23:02.978 running as: named -u bind -g
+15-Nov-2024 18:23:02.978 compiled by GCC 13.2.0
+15-Nov-2024 18:23:02.978 compiled with OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+15-Nov-2024 18:23:02.978 linked to OpenSSL version: OpenSSL 3.0.13 30 Jan 2024
+15-Nov-2024 18:23:02.978 compiled with libuv version: 1.48.0
+15-Nov-2024 18:23:02.978 linked to libuv version: 1.48.0
+15-Nov-2024 18:23:02.978 compiled with libxml2 version: 2.9.14
+15-Nov-2024 18:23:02.978 linked to libxml2 version: 20914
+15-Nov-2024 18:23:02.978 compiled with json-c version: 0.17
+15-Nov-2024 18:23:02.978 linked to json-c version: 0.17
+15-Nov-2024 18:23:02.978 compiled with zlib version: 1.3
+15-Nov-2024 18:23:02.978 linked to zlib version: 1.3
+15-Nov-2024 18:23:02.978 ----------------------------------------------------
+15-Nov-2024 18:23:02.978 BIND 9 is maintained by Internet Systems Consortium,
+15-Nov-2024 18:23:02.978 Inc. (ISC), a non-profit 501(c)(3) public-benefit 
+15-Nov-2024 18:23:02.978 corporation.  Support and training for BIND 9 are 
+15-Nov-2024 18:23:02.978 available at https://www.isc.org/support
+15-Nov-2024 18:23:02.978 ----------------------------------------------------
+15-Nov-2024 18:23:02.978 found 6 CPUs, using 6 worker threads
+15-Nov-2024 18:23:02.978 using 6 UDP listeners per interface
+15-Nov-2024 18:23:02.978 DNSSEC algorithms: RSASHA1 NSEC3RSASHA1 RSASHA256 RSASHA512 ECDSAP256SHA256 ECDSAP384SHA384 ED25519 ED448
+15-Nov-2024 18:23:02.978 DS algorithms: SHA-1 SHA-256 SHA-384
+15-Nov-2024 18:23:02.978 HMAC algorithms: HMAC-MD5 HMAC-SHA1 HMAC-SHA224 HMAC-SHA256 HMAC-SHA384 HMAC-SHA512
+15-Nov-2024 18:23:02.978 TKEY mode 2 support (Diffie-Hellman): yes
+15-Nov-2024 18:23:02.978 TKEY mode 3 support (GSS-API): yes
+15-Nov-2024 18:23:02.978 loading configuration from '/etc/bind/named.conf'
+15-Nov-2024 18:23:02.978 unable to open '/etc/bind/bind.keys'; using built-in keys instead
+15-Nov-2024 18:23:02.978 looking for GeoIP2 databases in '/usr/share/GeoIP'
+15-Nov-2024 18:23:02.978 using default UDP/IPv4 port range: [32768, 60999]
+15-Nov-2024 18:23:02.986 using default UDP/IPv6 port range: [32768, 60999]
+15-Nov-2024 18:23:02.986 listening on IPv4 interface lo, 127.0.0.1#53
+15-Nov-2024 18:23:02.986 listening on IPv4 interface eth0, 172.16.0.4#53
+15-Nov-2024 18:23:02.986 IPv6 socket API is incomplete; explicitly binding to each IPv6 address separately
+15-Nov-2024 18:23:02.986 listening on IPv6 interface lo, ::1#53
+15-Nov-2024 18:23:02.986 generating session key for dynamic DNS
+15-Nov-2024 18:23:02.986 sizing zone task pool based on 1 zones
+15-Nov-2024 18:23:02.986 none:99: 'max-cache-size 90%' - setting to 6661MB (out of 7401MB)
+15-Nov-2024 18:23:02.986 set up managed keys zone for view _default, file 'managed-keys.bind'
+15-Nov-2024 18:23:02.986 configuring command channel from '/etc/bind/rndc.key'
+15-Nov-2024 18:23:02.986 command channel listening on 127.0.0.1#953
+15-Nov-2024 18:23:02.986 configuring command channel from '/etc/bind/rndc.key'
+15-Nov-2024 18:23:02.986 command channel listening on ::1#953
+15-Nov-2024 18:23:02.986 not using config file logging statement for logging due to -g option
+15-Nov-2024 18:23:02.986 managed-keys-zone: loaded serial 0
+15-Nov-2024 18:23:02.986 zone tendaelectronica.int/IN: loaded serial 10000002
+15-Nov-2024 18:23:02.986 all zones loaded
+15-Nov-2024 18:23:02.986 running
+```
 
-
-
+Como podemos observar arranca correctamente e non da ningun tipo de erro.
